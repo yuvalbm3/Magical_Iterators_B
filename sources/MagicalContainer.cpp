@@ -20,6 +20,30 @@ namespace ariel
         _container = vec;
     }
 
+
+    MagicalContainer::MagicalContainer(const MagicalContainer& other){
+        _container = other._container;
+    }
+
+    MagicalContainer &MagicalContainer::MagicalContainer::operator=(const MagicalContainer& other) {
+        if (this != &other) {
+            _container = other._container;
+        }
+        return *this;
+    }
+
+    MagicalContainer &MagicalContainer::MagicalContainer::operator=(MagicalContainer&& other) noexcept {
+        if (this != &other) {
+            _container = std::move(other._container);
+        }
+        return *this;
+    }
+
+    MagicalContainer::MagicalContainer(MagicalContainer&& other) noexcept {
+        _container = std::move(other._container);
+    }
+
+
     MagicalContainer::~MagicalContainer()
     {
     }
@@ -87,18 +111,6 @@ namespace ariel
         return it;
     }
 
-    // MagicalContainer::AscendingIterator &MagicalContainer::AscendingIterator::operator=(AscendingIterator &&other) noexcept
-    // {
-    //     if (this != &other)
-    //     {
-    //         this->_ascIt = other._ascIt;
-    //         this->_index = other._index;
-    //         other._ascIt = nullptr;
-    //         other._index = 0;
-    //     }
-    //     return *this;
-    // }
-
     // MagicalContainer::AscendingIterator &MagicalContainer::AscendingIterator::operator=(const AscendingIterator &other)
     // {
     //     if (this->_ascIt != other._ascIt)
@@ -147,6 +159,19 @@ namespace ariel
         if (this->_ascIt->_container != other._ascIt->_container)
         {
             throw runtime_error("");
+        }
+        return *this;
+    }
+
+
+    MagicalContainer::AscendingIterator &MagicalContainer::AscendingIterator::operator=(AscendingIterator &&other) noexcept
+    {
+        if (this != &other)
+        {
+            this->_ascIt = other._ascIt;
+            this->_index = other._index;
+            other._ascIt = nullptr;
+            other._index = 0;
         }
         return *this;
     }
@@ -206,6 +231,18 @@ namespace ariel
         if (this->_siCoIt->_container != other._siCoIt->_container)
         {
             throw runtime_error("");
+        }
+        return *this;
+    }
+
+    MagicalContainer::SideCrossIterator &MagicalContainer::SideCrossIterator::operator=(SideCrossIterator &&other) noexcept
+    {
+        if (this != &other)
+        {
+            this->_siCoIt = other._siCoIt;
+            this->_index = other._index;
+            other._siCoIt = nullptr;
+            other._index = 0;
         }
         return *this;
     }
@@ -295,6 +332,20 @@ namespace ariel
         if (this->_primIt->_container != other._primIt->_container)
         {
             throw runtime_error("");
+        }
+        return *this;
+    }
+
+    MagicalContainer::PrimeIterator &MagicalContainer::PrimeIterator::operator=(PrimeIterator &&other) noexcept
+    {
+        if (this != &other)
+        {
+            this->_primIt = other._primIt;
+            this->_index = other._index;
+            this->_np = other._np;
+            other._primIt = nullptr;
+            other._index = 0;
+            other._np = 0;
         }
         return *this;
     }
